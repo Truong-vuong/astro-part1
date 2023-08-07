@@ -3,16 +3,32 @@ import Layout from '../layouts/Layout.astro';
 import AstrComponent from '../components/AstrComponent.astro';
 import VueComponent from '../components/VueComponent.vue';
 import VueComponent2 from '../components/VueComponent2.vue';
-
+import Fetch from '../components/Fetch.astro';
+import SvelteFetch from '../components/SvelteFetch.svelte';
+import Button from '../components/Button.astro';
+import Dialog from '../components/Dialog.astro';
+import TestStore from '../components/svelte/TestStore.svelte';
+import TestStoreVue from '../components/vue/TestStore.vue';
+import { get } from './builtwith.json';
+import { getById } from './api/[id].json';
 
 const vueTitle = 'This is vue title';
 const pTemplate = `<p>This is p tag</p>`
 
+const a = await get({params: "a", request: "b"}).then((res) => JSON.parse(res.body));
+console.log(a.name)
+
+// const b = await getById()
+// console.log(b)
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
 		<h1>Astro page</h1>
+		<Button></Button>
+		<Dialog></Dialog>
+		<TestStore client:load></TestStore>
+		<TestStoreVue client:load></TestStoreVue>
 		<VueComponent client:load title={vueTitle}></VueComponent>
 		<VueComponent2 client:click></VueComponent2>
 		<AstrComponent>
@@ -27,6 +43,8 @@ const pTemplate = `<p>This is p tag</p>`
 		</div>
 		<Fragment set:html={pTemplate}></Fragment>
 
+		<Fetch></Fetch>
+		<SvelteFetch client:load></SvelteFetch>
 
 	</main>
 </Layout>

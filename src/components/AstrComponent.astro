@@ -1,4 +1,9 @@
 ---
+interface Data {
+    title: string,
+}
+const data: Data = Astro.locals;
+// console.log(data)
 ---
 
 <section>
@@ -6,4 +11,6 @@
     <slot name="header"></slot>
     <slot></slot>
     <slot name="footer"></slot>
+
+    <h1>{data.title}</h1>
 </section>

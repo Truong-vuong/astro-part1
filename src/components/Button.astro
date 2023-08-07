@@ -1,0 +1,11 @@
+<button id="openDialog">Open</button>
+
+<script>
+  import { isOpen } from '../store.js';
+
+  function openDialog() {
+    isOpen.set(true);
+  };
+
+  document.getElementById('openDialog').addEventListener('click', openDialog);
+</script>
