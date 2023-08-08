@@ -11,99 +11,159 @@ import TestStore from '../components/svelte/TestStore.svelte';
 import TestStoreVue from '../components/vue/TestStore.vue';
 import { get } from './builtwith.json';
 import { getById } from './api/[id].json';
+import { getHello } from './api/hello.js';
+
+const profilePicture =
+  'https://media.istockphoto.com/id/134573874/vi/anh/c%E1%BA%AFt-t%E1%BB%89a-c%C3%A2y-c%E1%BB%91i.jpg?s=2048x2048&w=is&k=20&c=C7s6nNJmCMEq_4DvT9fj9f75k4PRKH1-4P_ankj3KLA=';
+//
+
+let response = await get(Astro);
+const data = await response;
 
 const vueTitle = 'This is vue title';
-const pTemplate = `<p>This is p tag</p>`
+const pTemplate = `<p>This is p tag</p>`;
 
-const a = await get({params: "a", request: "b"}).then((res) => JSON.parse(res.body));
-console.log(a.name)
+const a = await get({ params: 'a', request: 'b' }).then((res) =>
+  JSON.parse(res.body)
+);
+console.log(a.name);
 
 // const b = await getById()
 // console.log(b)
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<h1>Astro page</h1>
-		<Button></Button>
-		<Dialog></Dialog>
-		<TestStore client:load></TestStore>
-		<TestStoreVue client:load></TestStoreVue>
-		<VueComponent client:load title={vueTitle}></VueComponent>
-		<VueComponent2 client:click></VueComponent2>
-		<AstrComponent>
-			<p slot="header">Header element</p>
-			<p>Default element</p>
-			<p slot="footer">Footer element</p>
-		</AstrComponent>
+  <main>
+    <body>
+      <div class="profile">
+        <img
+          class="profile__picture"
+          src={profilePicture}
+          alt="Vuong's headshot."
+          width="200px"
+        />
+        <div class="profile__details">
+          <h1>Truong Dinh Quoc Vuong</h1>
+          <h2>MGI Solutions</h2>
+          <p>
+            Helping developers be excellent and succeed at building scalable
+            products
+          </p>
+        </div>
+      </div>
+    </body>
 
-		<div set:html={pTemplate}></div>
-		<div class:list={[ 'hello abc', { hello: true, world: true }, new Set([ 'hello', 'def' ]) ]}>
-		Test class list
-		</div>
-		<Fragment set:html={pTemplate}></Fragment>
+    <!--  -->
+    <h1>Astro page</h1>
+    <h1>{data.greeting} world!</h1>
+    <Button />
+    <Dialog />
+    <TestStore client:load />
+    <TestStoreVue client:load />
+    <VueComponent client:load title={vueTitle} />
+    <VueComponent2 client:click />
+    <AstrComponent>
+      <p slot="header">Header element</p>
+      <p>Default element</p>
+      <p slot="footer">Footer element</p>
+    </AstrComponent>
 
-		<Fetch></Fetch>
-		<SvelteFetch client:load></SvelteFetch>
+    <div set:html={pTemplate} />
+    <div
+      class:list={[
+        'hello abc',
+        { hello: true, world: true },
+        new Set(['hello', 'def']),
+      ]}
+    >
+      Test class list
+    </div>
+    <Fragment set:html={pTemplate} />
 
-	</main>
+    <Fetch />
+    <SvelteFetch client:load />
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	.astro-a {
-		position: absolute;
-		top: -32px;
-		left: 50%;
-		transform: translatex(-50%);
-		width: 220px;
-		height: auto;
-		z-index: -1;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
+  .profile {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 1rem 0 3rem 0;
+  }
+
+  .profile__details {
+    flex: 1 0 300px;
+  }
+
+  .profile__details > h1 {
+    margin-top: 0;
+  }
+
+  .profile__picture {
+    border-radius: 50%;
+    margin: 0 2rem 1rem 0;
+  }
+
+  /*  */
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .astro-a {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translatex(-50%);
+    width: 220px;
+    height: auto;
+    z-index: -1;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .instructions {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--accent-light), 25%);
+    background: linear-gradient(
+      rgba(var(--accent-dark), 66%),
+      rgba(var(--accent-dark), 33%)
+    );
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .instructions code {
+    font-size: 0.8em;
+    font-weight: bold;
+    background: rgba(var(--accent-light), 12%);
+    color: rgb(var(--accent-light));
+    border-radius: 4px;
+    padding: 0.3em 0.4em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent-light));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 2rem;
+    padding: 0;
+  }
 </style>

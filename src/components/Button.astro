@@ -1,3 +1,11 @@
+---
+import axios from 'axios';
+import intance from '../axiosConfig.js';
+
+const cart = await intance.get(`/carts/5`).then((res) => res.data);
+console.log('124', cart.id);
+---
+
 <button id="openDialog">Open</button>
 
 <script>
@@ -5,7 +13,7 @@
 
   function openDialog() {
     isOpen.set(true);
-  };
+  }
 
   document.getElementById('openDialog').addEventListener('click', openDialog);
 </script>
